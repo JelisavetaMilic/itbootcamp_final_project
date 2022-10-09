@@ -9,7 +9,6 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.AdminCitiesPage;
 import pages.LoginPage;
-import pages.SignupPage;
 
 import java.time.Duration;
 
@@ -32,11 +31,12 @@ public class AdminCitiesTest extends BaseTest {
     @Override
     public void beforeMethod() {
         super.beforeMethod();
-        driver.get("https://vue-demo.daniel-avellaneda.com/login");
+        driver.get("https://vue-demo.daniel-avellaneda.com/admin/cities");
         loginPage.logIn("admin@admin.com", "12345");
+
     }
 
-    @Test
+    @Test(priority = 1)
     public void testVisitAdminCities() {
 
         adminCitiesPage.getAdminButton().click();
@@ -51,24 +51,101 @@ public class AdminCitiesTest extends BaseTest {
         boolean expectedResultLogoutButton = true;
 
         Assert.assertEquals(actualResultLogoutButton, expectedResultLogoutButton);
+        loginPage.getLogoutButton().click();
 
     }
 
-    @Test
-    public void testCreateCity() throws InterruptedException {
+    @Test(priority = 2)
+    public void testCreateCity() {
 
         adminCitiesPage.getAdminButton().click();
         adminCitiesPage.getCitiesButton().click();
         adminCitiesPage.getNewItem().click();
 
         adminCitiesPage.createNewCity("Zimbabve");
-        Thread.sleep(3000);
 
         String actualSuccessfullySave = adminCitiesPage.getSuccessfullySave().getText();
-        String expectedSuccesfullySave = "Saved successfully\n" +
-                "CLOSE";
+        String expectedSuccesfullySave = "Saved successfully";
 
-        Assert.assertEquals(actualSuccessfullySave, expectedSuccesfullySave);
+        Assert.assertTrue(actualSuccessfullySave.contains(expectedSuccesfullySave));
+        loginPage.getLogoutButton().click();
     }
+
+    @Test(priority = 3)
+    public void testEditCity() {
+
+        adminCitiesPage.getAdminButton().click();
+        adminCitiesPage.getCitiesButton().click();
+
+        adminCitiesPage.getEditButton().click();
+        adminCitiesPage.getNameField().click();
+
+        adminCitiesPage.getNameField().sendKeys(" edited");
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
+
+        adminCitiesPage.getSaveButton().click();
+
+        String actualSuccessfullySave = adminCitiesPage.getSuccessfullySave().getText();
+        String expectedSuccesfullySave = "Saved successfully";
+
+        Assert.assertTrue(actualSuccessfullySave.contains(expectedSuccesfullySave));
+        loginPage.getLogoutButton().click();
+
+    }
+
+    @Test(priority = 4)
+    public void testSearchCity() throws InterruptedException {
+
+        String searchText = "Zimbabve edited";
+
+        adminCitiesPage.getAdminButton().click();
+        adminCitiesPage.getCitiesButton().click();
+        adminCitiesPage.getSearchField().click();
+        adminCitiesPage.getSearchField().sendKeys(searchText);
+
+        Thread.sleep(3000);
+
+        String actualCityText = adminCitiesPage.getNameOfCity().getText();
+
+        Assert.assertTrue(actualCityText.contains(searchText));
+        loginPage.getLogoutButton().click();
+
+    }
+
+    @Test(priority = 5)
+    public void testDeleteCity() throws InterruptedException {
+
+        adminCitiesPage.getAdminButton().click();
+        adminCitiesPage.getCitiesButton().click();
+
+        String searchText = "Zimbabve edited";
+
+        adminCitiesPage.getAdminButton().click();
+        adminCitiesPage.getCitiesButton().click();
+        adminCitiesPage.getSearchField().click();
+        adminCitiesPage.getSearchField().sendKeys(searchText);
+
+        Thread.sleep(3000);
+
+        String actualCityText = adminCitiesPage.getNameOfCity().getText();
+
+        Assert.assertTrue(actualCityText.contains(searchText));
+
+        adminCitiesPage.getDeleteButton().click();
+
+        adminCitiesPage.getDeleteDialogButton().click();
+
+        WebDriverWait driverWait = new WebDriverWait(driver, Duration.ofSeconds(20));
+        driverWait.until(ExpectedConditions.textToBe(By.xpath("//*[@id='app']/div[1]/main/div/div[2]/div/div[3]/div/div/div/div/div[1]"),
+                "Deleted successfully\nCLOSE"));
+
+        String actualDeletedSuccessfully = adminCitiesPage.getSuccessfullySave().getText();
+        String expectedDeletedSuccessfully = "Deleted successfully";
+
+        Assert.assertTrue(actualDeletedSuccessfully.contains(expectedDeletedSuccessfully));
+        loginPage.getLogoutButton().click();
+
+    }
+
 
 }

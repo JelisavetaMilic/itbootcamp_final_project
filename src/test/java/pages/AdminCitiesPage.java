@@ -13,7 +13,13 @@ public class AdminCitiesPage extends BasePage {
     private By nameField = By.id("name");
     private By saveButton = By.xpath("//*[@id=\"app\"]/div[5]/div/div/div[3]/button[2]");
     private By successfullySave = By.xpath("//*[@id=\"app\"]/div[1]/main/div/div[2]/div/div[3]/div/div/div/div/div[1]");
-
+    private By editButton = By.id("edit");
+    private By searchField = By.id("search");
+    private By nameOfCity = By.xpath("//*[@id=\"app\"]/div[1]/main/div/div[2]/div/div[1]/div[2]/table/tbody/tr/td[2]");
+    private By deleteButton = By.id("delete");
+    private By deleteDialog = By.xpath("//*[@id=\"app\"]/div[6]/div/div");
+    private By deleteDialogButton = By.xpath("//*[@id=\"app\"]/div[5]/div/div/div[2]/button[2]");
+    private By deleteMessage = By.xpath("//*[@id='app']/div[1]/main/div/div[2]/div/div[3]/div/div/div/div/div[1]");
 
     public AdminCitiesPage(WebDriver driver) {
         super(driver);
@@ -31,7 +37,7 @@ public class AdminCitiesPage extends BasePage {
         return getDriver().findElement(newItem);
     }
 
-    private WebElement getNameField() {
+    public WebElement getNameField() {
         return getDriver().findElement(nameField);
     }
 
@@ -42,6 +48,35 @@ public class AdminCitiesPage extends BasePage {
     public WebElement getSuccessfullySave() {
         return getDriver().findElement(successfullySave);
     }
+
+    public WebElement getEditButton() {
+        return getDriver().findElement(editButton);
+    }
+
+    public WebElement getSearchField() {
+        return getDriver().findElement(searchField);
+    }
+
+    public WebElement getNameOfCity() {
+        return getDriver().findElement(nameOfCity);
+    }
+
+    public WebElement getDeleteButton() {
+        return getDriver().findElement(deleteButton);
+    }
+
+    public WebElement getDeleteDialog() {
+        return getDriver().findElement(deleteDialog);
+    }
+
+    public WebElement getDeleteDialogButton() {
+        return getDriver().findElement(deleteDialogButton);
+    }
+
+    public WebElement getDeleteMessage() {
+        return getDriver().findElement(deleteMessage);
+    }
+
 
     public void createNewCity(String name) {
         getNameField().click();
