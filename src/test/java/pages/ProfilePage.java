@@ -1,7 +1,5 @@
 package pages;
 
-import com.github.javafaker.Name;
-import com.github.javafaker.PhoneNumber;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
@@ -18,6 +16,8 @@ public class ProfilePage extends BasePage {
     private By gitHub = By.id("urlGitHub");
     private By saveButton = By.xpath("//*[@id=\"app\"]/div[1]/main/div/div[2]/div/div/div[2]/span/form/div/div/div[8]/button");
     private By saveSuccessfullyMessage = By.xpath("//*[@id=\"app\"]/div[1]/main/div/div[2]/div/div/div[4]/div/div/div/div/div[1]");
+    private By chosenCity = By.xpath("//*[@id=\"list-item-159-4\"]/div/div");
+
 
     public ProfilePage(WebDriver driver) {
         super(driver);
@@ -54,21 +54,25 @@ public class ProfilePage extends BasePage {
     public WebElement getSaveButton() {
         return getDriver().findElement(saveButton);
     }
-
     public WebElement getSaveSuccessfullyMessage() {
         return getDriver().findElement(saveSuccessfullyMessage);
+    }
+
+    public WebElement getChosenCity() {
+        return getDriver().findElement(chosenCity);
     }
 
     public void makeProfile(String name, String phone, String city, String country, String twitter, String gitHub) {
         getName().sendKeys(Keys.CONTROL + "A", Keys.DELETE);
         getPhone().sendKeys(Keys.CONTROL + "A", Keys.DELETE);
-        getCity().sendKeys(Keys.CONTROL + "A", Keys.DELETE);;
-        getCountry().sendKeys(Keys.CONTROL + "A", Keys.DELETE);;
-        getTwitter().sendKeys(Keys.CONTROL + "A", Keys.DELETE);;
-        getGitHub().sendKeys(Keys.CONTROL + "A", Keys.DELETE);;
+        getCity().sendKeys(Keys.CONTROL + "A", Keys.DELETE);
+        getCountry().sendKeys(Keys.CONTROL + "A", Keys.DELETE);
+        getTwitter().sendKeys(Keys.CONTROL + "A", Keys.DELETE);
+        getGitHub().sendKeys(Keys.CONTROL + "A", Keys.DELETE);
         getName().sendKeys(name);
         getPhone().sendKeys(phone);
-        getCity().sendKeys(city);
+        getCity().click();
+        getChosenCity().click();
         getCountry().sendKeys(country);
         getTwitter().sendKeys(twitter);
         getGitHub().sendKeys(gitHub);

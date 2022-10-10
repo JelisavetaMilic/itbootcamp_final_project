@@ -35,19 +35,17 @@ public class ProfileTest extends BaseTest {
     }
 
     @Test
-    public void editsProfile() throws InterruptedException {
+    public void editsProfile() {
 
         profilePage.getProfileButton().click();
-        profilePage.makeProfile (
-                String.valueOf(Faker.instance().name()),
-                String.valueOf(Faker.instance().phoneNumber()),
-                Faker.instance().address().city(),
-                Faker.instance().address().country(),
-                Faker.instance().internet().avatar(),
-                Faker.instance().internet().avatar()
-        );
+        String name = Faker.instance().name().fullName();
+        String phone = Faker.instance().phoneNumber().cellPhone();
+        String city = "Chicago";
+        String country = Faker.instance().address().country();
+        String twitter = Faker.instance().internet().avatar();
+        String gitHub = Faker.instance().internet().avatar();
 
-        Thread.sleep(3000);
+        profilePage.makeProfile (name, phone, city, country, twitter, gitHub);
 
         profilePage.getSaveButton().click();
 
@@ -59,6 +57,20 @@ public class ProfileTest extends BaseTest {
         String expectedResult = "Profile saved successfuly";
 
         Assert.assertTrue(actualResult.contains(expectedResult));
+
+        String actualName = profilePage.getName().getAttribute("value");
+        String actualPhone = profilePage.getPhone().getAttribute("value");
+        String actualCity = profilePage.getCity().getAttribute("value");
+        String actualCountry = profilePage.getCountry().getAttribute("value");
+        String actualTwitter = profilePage.getTwitter().getAttribute("value");
+        String actualGitHub = profilePage.getGitHub().getAttribute("value");
+
+        Assert.assertEquals(actualName, name);
+        Assert.assertEquals(actualPhone, phone);
+        Assert.assertEquals(actualCity, city);
+        Assert.assertEquals(actualCountry, country);
+        Assert.assertEquals(actualTwitter, twitter);
+        Assert.assertEquals(actualGitHub, gitHub);
 
     }
 }
