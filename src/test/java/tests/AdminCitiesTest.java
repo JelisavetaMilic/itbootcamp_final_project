@@ -31,17 +31,15 @@ public class AdminCitiesTest extends BaseTest {
     @Override
     public void beforeMethod() {
         super.beforeMethod();
-        driver.get("https://vue-demo.daniel-avellaneda.com/admin/cities");
+        driver.get("https://vue-demo.daniel-avellaneda.com/login");
         loginPage.logIn("admin@admin.com", "12345");
-
-    }
-
-    @Test(priority = 1)
-    public void testVisitAdminCities() {
-
         adminCitiesPage.getAdminButton().click();
         adminCitiesPage.getCitiesButton().click();
 
+    }
+
+    @Test
+    public void visitAdminCities() {
         String actualResultAdminCities = driver.getCurrentUrl();
         String expectedResultAdminCities = "https://vue-demo.daniel-avellaneda.com/admin/cities";
 
@@ -52,88 +50,80 @@ public class AdminCitiesTest extends BaseTest {
 
         Assert.assertEquals(actualResultLogoutButton, expectedResultLogoutButton);
         loginPage.getLogoutButton().click();
-
     }
 
-    @Test(priority = 2)
-    public void testCreateCity() {
-
-        adminCitiesPage.getAdminButton().click();
-        adminCitiesPage.getCitiesButton().click();
+    @Test
+    public void createCity() {
         adminCitiesPage.getNewItem().click();
-
         adminCitiesPage.createNewCity("Zimbabve");
 
         String actualSuccessfullySave = adminCitiesPage.getSuccessfullySave().getText();
         String expectedSuccesfullySave = "Saved successfully";
 
         Assert.assertTrue(actualSuccessfullySave.contains(expectedSuccesfullySave));
+        adminCitiesPage.getDeleteButton().click();
+        adminCitiesPage.getDeleteCityButton().click();
         loginPage.getLogoutButton().click();
     }
 
-    @Test(priority = 3)
-    public void testEditCity() {
-
-        adminCitiesPage.getAdminButton().click();
-        adminCitiesPage.getCitiesButton().click();
-
+    @Test
+    public void editCity() throws InterruptedException {
+        adminCitiesPage.getNewItem().click();
+        adminCitiesPage.createNewCity("Zimbabve");
+        Thread.sleep(3000);
         adminCitiesPage.getEditButton().click();
         adminCitiesPage.getNameField().click();
 
-        adminCitiesPage.getNameField().sendKeys(" edited");
+        adminCitiesPage.getNameField().sendKeys(" - edited");
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
-
         adminCitiesPage.getSaveButton().click();
 
+        WebDriverWait driverWait = new WebDriverWait(driver, Duration.ofSeconds(30));
+        driverWait.until(ExpectedConditions.textToBe(By.xpath("//*[@id='app']/div[1]/main/div/div[2]/div/div[3]/div/div/div/div/div[1]"),
+                "Saved successfully\nCLOSE"));
         String actualSuccessfullySave = adminCitiesPage.getSuccessfullySave().getText();
         String expectedSuccesfullySave = "Saved successfully";
 
         Assert.assertTrue(actualSuccessfullySave.contains(expectedSuccesfullySave));
+        adminCitiesPage.getDeleteButton().click();
+        adminCitiesPage.getDeleteCityButton().click();
         loginPage.getLogoutButton().click();
 
     }
 
-    @Test(priority = 4)
-    public void testSearchCity() throws InterruptedException {
+    @Test
+    public void searchCity() throws InterruptedException {
+        adminCitiesPage.getNewItem().click();
+        adminCitiesPage.createNewCity("Zimbabve - edited");
 
-        String searchText = "Zimbabve edited";
-
-        adminCitiesPage.getAdminButton().click();
-        adminCitiesPage.getCitiesButton().click();
+        String searchText = "Zimbabve - edited";
         adminCitiesPage.getSearchField().click();
         adminCitiesPage.getSearchField().sendKeys(searchText);
-
         Thread.sleep(3000);
-
         String actualCityText = adminCitiesPage.getNameOfCity().getText();
 
         Assert.assertTrue(actualCityText.contains(searchText));
+        adminCitiesPage.getDeleteButton().click();
+        adminCitiesPage.getDeleteCityButton().click();
         loginPage.getLogoutButton().click();
 
     }
 
-    @Test(priority = 5)
-    public void testDeleteCity() throws InterruptedException {
+    @Test
+    public void deleteCity() throws InterruptedException {
+        adminCitiesPage.getNewItem().click();
+        adminCitiesPage.createNewCity("Zimbabve - edited");
 
-        adminCitiesPage.getAdminButton().click();
-        adminCitiesPage.getCitiesButton().click();
-
-        String searchText = "Zimbabve edited";
-
-        adminCitiesPage.getAdminButton().click();
-        adminCitiesPage.getCitiesButton().click();
+        String searchText = "Zimbabve - edited";
         adminCitiesPage.getSearchField().click();
         adminCitiesPage.getSearchField().sendKeys(searchText);
-
         Thread.sleep(3000);
-
         String actualCityText = adminCitiesPage.getNameOfCity().getText();
 
         Assert.assertTrue(actualCityText.contains(searchText));
 
         adminCitiesPage.getDeleteButton().click();
-
-        adminCitiesPage.getDeleteDialogButton().click();
+        adminCitiesPage.getDeleteCityButton().click();
 
         WebDriverWait driverWait = new WebDriverWait(driver, Duration.ofSeconds(20));
         driverWait.until(ExpectedConditions.textToBe(By.xpath("//*[@id='app']/div[1]/main/div/div[2]/div/div[3]/div/div/div/div/div[1]"),
@@ -146,6 +136,4 @@ public class AdminCitiesTest extends BaseTest {
         loginPage.getLogoutButton().click();
 
     }
-
-
 }
