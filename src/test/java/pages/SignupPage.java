@@ -14,9 +14,12 @@ public class SignupPage extends BasePage{
     private By confirmPasswordField = By.id("confirmPassword");
     private By confirmPasswordAttributeType = By.xpath("//*[@id=\"app\"]/div[1]/main/div/div[2]/div/div/div[2]/span/form/div/div[4]/span/div/div/div[1]/div/label");
     private By errorMessageEmailAlreadyExists = By.xpath("//*[@id=\"app\"]/div[1]/main/div/div[2]/div/div/div[3]/div/div/div/div/div[1]/ul/li");
-    private By signUpButton = By.xpath("//*[@id=\"app\"]/div[1]/main/div/div[2]/div/div/div[2]/span/form/div/div[5]/button");
+    private By signMeUpButton = By.xpath("//*[@id=\"app\"]/div[1]/main/div/div[2]/div/div/div[2]/span/form/div/div[5]/button");
    private By closeEmailButton = By.xpath("//*[@id=\"app\"]/div[1]/main/div/div[2]/div/div/div[3]/div/div/div/div/div[1]/button");
     private By importantErrorMessage = By.xpath("//*[@id=\"app\"]/div[4]/div/div/div[1]");
+    private By closeImportantButton = By.xpath("//*[@id=\"app\"]/div[4]/div/div/div[3]/button/span");
+    private By logOutButtonSignUpPage = By.xpath("//*[@id=\"app\"]/div[1]/div/header/div/div[3]/button[1]");
+    private By signUpButton = By.xpath("//*[@id=\"app\"]/div[1]/div/header/div/div[3]/a[4]");
 
 
     public SignupPage(WebDriver driver) {
@@ -55,8 +58,8 @@ public class SignupPage extends BasePage{
         return getDriver().findElement(errorMessageEmailAlreadyExists);
     }
 
-    public WebElement getSignUpButton() {
-        return getDriver().findElement(signUpButton);
+    public WebElement getSignMeUpButton() {
+        return getDriver().findElement(signMeUpButton);
     }
 
     public WebElement getCloseEmailButton() {
@@ -67,6 +70,20 @@ public class SignupPage extends BasePage{
         return getDriver().findElement(importantErrorMessage);
     }
 
+    public WebElement getCloseImportantButton() {
+        return getDriver().findElement(closeImportantButton);
+    }
+
+    public WebElement getLogOutButtonSignUp() {
+        return getDriver().findElement(logOutButtonSignUpPage);
+    }
+
+    public WebElement getSignUpButton() {
+        return getDriver().findElement(signUpButton);
+    }
+
+
+
     public void signUp(String name, String email, String password, String confirmPassword) {
        getNameField().clear();
        getEmailField().clear();
@@ -76,7 +93,7 @@ public class SignupPage extends BasePage{
        getEmailField().sendKeys(email);
        getPasswordField().sendKeys(password);
        getConfirmPasswordField().sendKeys(confirmPassword);
-       getSignUpButton().click();
+       getSignMeUpButton().click();
 
     }
 

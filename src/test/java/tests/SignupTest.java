@@ -31,7 +31,7 @@ public class SignupTest extends BaseTest{
         driver.get("https://vue-demo.daniel-avellaneda.com/signup");
     }
 
-    @Test(priority = 1)
+    @Test
     public void testVisitSignupPage() {
         String actualResultSignup = driver.getCurrentUrl();
         String expectedResultSignUp = "https://vue-demo.daniel-avellaneda.com/signup";
@@ -39,7 +39,7 @@ public class SignupTest extends BaseTest{
         Assert.assertEquals(actualResultSignup, expectedResultSignUp);
     }
 
-    @Test(priority = 2)
+    @Test
     public void testInputTypes() {
         String actualResultEmail = signupPage.getEmailAttributeType().getText();
         String expectedResultEmail = "E-mail";
@@ -57,7 +57,7 @@ public class SignupTest extends BaseTest{
         Assert.assertEquals(actualResultConfirmPassword, expectedResultConfirmPassword);
     }
 
-    @Test(priority = 3)
+    @Test
     public void testErrorEmailExists() {
         signupPage.signUp("Test Test", "admin@admin.com", "123654", "123654");
 
@@ -75,7 +75,7 @@ public class SignupTest extends BaseTest{
         signupPage.getCloseEmailButton().click();
     }
 
-    @Test(priority = 4)
+    @Test
     public void testSignup() {
 
         String name = Faker.instance().name().fullName();
@@ -92,6 +92,10 @@ public class SignupTest extends BaseTest{
 
         Assert.assertTrue(signupPage.getImportantMessage().isDisplayed());
         Assert.assertEquals(actualImportantMessage, expectedImportantMessage);
+
+        signupPage.getCloseImportantButton().click();
+        signupPage.getLogOutButtonSignUp().click();
+        signupPage.getSignUpButton().click();
     }
 
 }

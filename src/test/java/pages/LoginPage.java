@@ -14,6 +14,7 @@ public class LoginPage extends BasePage {
     private By errorMessageUserNotExist = By.xpath("//*[@id=\"app\"]/div[1]/main/div/div[2]/div/div/div[4]/div/div/div/div/div[1]/ul/li");
     private By errorMessageWrongPassword = By.xpath("//*[@id=\"app\"]/div[1]/main/div/div[2]/div/div/div[4]/div/div/div/div/div[1]/ul/li");
     private By logoutButton = By.xpath("//*[@id=\"app\"]/div/div/header/div/div[3]/button[2]");
+
     public LoginPage(WebDriver driver) {
         super(driver);
     }

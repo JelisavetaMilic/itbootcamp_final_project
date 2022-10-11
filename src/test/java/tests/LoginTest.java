@@ -30,7 +30,7 @@ public class LoginTest extends BaseTest{
         driver.get("https://vue-demo.daniel-avellaneda.com/login");
     }
 
-    @Test(priority = 1)
+    @Test
     public void testVisitLoginPage() {
         String actualResult = driver.getCurrentUrl();
         String expectedResult = "https://vue-demo.daniel-avellaneda.com/login";
@@ -40,7 +40,7 @@ public class LoginTest extends BaseTest{
     }
 
 
-    @Test(priority = 2)
+    @Test
     public void testInputTypes() {
         String actualResultEmail = loginPage.getEmailAttributeType().getText();
         String expectedResultEmail = "E-mail";
@@ -54,7 +54,7 @@ public class LoginTest extends BaseTest{
 
     }
 
-    @Test(priority = 3)
+    @Test
     public void testInvalidLogin() {
         String emailAddress = Faker.instance().internet().emailAddress();
         String password = Faker.instance().internet().password();
@@ -73,7 +73,7 @@ public class LoginTest extends BaseTest{
 
     }
 
-    @Test(priority = 4)
+    @Test
     public void testInvalidPassword() {
         loginPage.logIn("admin@admin.com", "54321");
 
@@ -90,7 +90,7 @@ public class LoginTest extends BaseTest{
 
     }
 
-    @Test(priority = 5)
+    @Test
     public void testValidLogin() {
         loginPage.logIn("admin@admin.com", "12345");
 
@@ -104,7 +104,7 @@ public class LoginTest extends BaseTest{
         loginPage.getLogoutButton().click();
     }
 
-    @Test(priority = 6)
+    @Test
     public void testLogout() {
 
         WebDriverWait waiter = new WebDriverWait(driver, Duration.ofSeconds(20));
