@@ -31,7 +31,7 @@ public class LoginTest extends BaseTest{
     }
 
     @Test
-    public void testVisitLoginPage() {
+    public void visitLoginPage() {
         String actualResult = driver.getCurrentUrl();
         String expectedResult = "https://vue-demo.daniel-avellaneda.com/login";
 
@@ -41,7 +41,7 @@ public class LoginTest extends BaseTest{
 
 
     @Test
-    public void testInputTypes() {
+    public void inputTypes() {
         String actualResultEmail = loginPage.getEmailAttributeType().getText();
         String expectedResultEmail = "E-mail";
 
@@ -55,7 +55,7 @@ public class LoginTest extends BaseTest{
     }
 
     @Test
-    public void testInvalidLogin() {
+    public void invalidLogin() {
         String emailAddress = Faker.instance().internet().emailAddress();
         String password = Faker.instance().internet().password();
         loginPage.logIn(emailAddress, password);
@@ -74,7 +74,7 @@ public class LoginTest extends BaseTest{
     }
 
     @Test
-    public void testInvalidPassword() {
+    public void errorMessageForInvalidPassword() {
         loginPage.logIn("admin@admin.com", "54321");
 
         String actualResultWrongPassword = loginPage.getErrorMessageWrongPassword().getText();
@@ -91,7 +91,7 @@ public class LoginTest extends BaseTest{
     }
 
     @Test
-    public void testValidLogin() {
+    public void validLogin() {
         loginPage.logIn("admin@admin.com", "12345");
 
         WebDriverWait driverWait = new WebDriverWait(driver,Duration.ofSeconds(20));
@@ -105,7 +105,7 @@ public class LoginTest extends BaseTest{
     }
 
     @Test
-    public void testLogout() {
+    public void logout() {
 
         WebDriverWait waiter = new WebDriverWait(driver, Duration.ofSeconds(20));
         waiter.until(ExpectedConditions.visibilityOf(loginPage.getEmail()));

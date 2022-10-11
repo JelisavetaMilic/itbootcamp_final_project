@@ -32,7 +32,7 @@ public class SignupTest extends BaseTest{
     }
 
     @Test
-    public void testVisitSignupPage() {
+    public void visitSignupPage() {
         String actualResultSignup = driver.getCurrentUrl();
         String expectedResultSignUp = "https://vue-demo.daniel-avellaneda.com/signup";
 
@@ -40,7 +40,7 @@ public class SignupTest extends BaseTest{
     }
 
     @Test
-    public void testInputTypes() {
+    public void inputTypes() {
         String actualResultEmail = signupPage.getEmailAttributeType().getText();
         String expectedResultEmail = "E-mail";
 
@@ -58,7 +58,7 @@ public class SignupTest extends BaseTest{
     }
 
     @Test
-    public void testErrorEmailExists() {
+    public void errorEmailExists() {
         signupPage.signUp("Test Test", "admin@admin.com", "123654", "123654");
 
         String actualResultErrorMessageEmailExist = signupPage.getErrorMessageEmailAlreadyExists().getText();
@@ -76,7 +76,7 @@ public class SignupTest extends BaseTest{
     }
 
     @Test
-    public void testSignup() {
+    public void signup() {
 
         String name = Faker.instance().name().fullName();
         String emailAddress = Faker.instance().internet().emailAddress();
