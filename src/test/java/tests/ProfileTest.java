@@ -36,7 +36,7 @@ public class ProfileTest extends BaseTest {
         profilePage.getProfileButton().click();
         String name = Faker.instance().name().fullName();
         String phone = Faker.instance().phoneNumber().cellPhone();
-        String city = "Cali";
+        String city = "Chicago";
         String country = Faker.instance().address().country();
         String twitter = Faker.instance().internet().avatar();
         String gitHub = Faker.instance().internet().avatar();

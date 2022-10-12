@@ -1,13 +1,17 @@
 package tests;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.AdminCitiesPage;
 import pages.LoginPage;
+
+import java.util.List;
 
 public class AdminCitiesTest extends BaseTest {
 
@@ -32,7 +36,14 @@ public class AdminCitiesTest extends BaseTest {
         loginPage.logIn("admin@admin.com", "12345");
         adminCitiesPage.getAdminButton().click();
         adminCitiesPage.getCitiesButton().click();
+    }
 
+    @AfterMethod
+    public void afterMethod() {
+        List<WebElement> logout = driver.findElements(By.xpath("//*[@id=\"app\"]/div[1]/div/header/div/div[3]/button[2]/span"));
+        if (logout.size() == 1) {
+            logout.get(0).click();
+        }
     }
 
     @Test
@@ -44,8 +55,6 @@ public class AdminCitiesTest extends BaseTest {
         boolean actualResultLogoutButton = loginPage.getLogoutButton().isDisplayed();
         boolean expectedResultLogoutButton = true;
         Assert.assertEquals(actualResultLogoutButton, expectedResultLogoutButton);
-
-        loginPage.getLogoutButton().click();
     }
 
     @Test
@@ -59,7 +68,6 @@ public class AdminCitiesTest extends BaseTest {
 
         adminCitiesPage.getDeleteButton().click();
         adminCitiesPage.getDeleteCityButton().click();
-        loginPage.getLogoutButton().click();
     }
 
     @Test
@@ -83,8 +91,6 @@ public class AdminCitiesTest extends BaseTest {
 
         adminCitiesPage.getDeleteButton().click();
         adminCitiesPage.getDeleteCityButton().click();
-        loginPage.getLogoutButton().click();
-
     }
 
     @Test
@@ -102,8 +108,6 @@ public class AdminCitiesTest extends BaseTest {
         Assert.assertTrue(actualCityText.contains(searchText));
         adminCitiesPage.getDeleteButton().click();
         adminCitiesPage.getDeleteCityButton().click();
-        loginPage.getLogoutButton().click();
-
     }
 
     @Test
@@ -127,8 +131,5 @@ public class AdminCitiesTest extends BaseTest {
         String actualDeletedSuccessfully = adminCitiesPage.getSuccessfullySave().getText();
         String expectedDeletedSuccessfully = "Deleted successfully";
         Assert.assertTrue(actualDeletedSuccessfully.contains(expectedDeletedSuccessfully));
-
-        loginPage.getLogoutButton().click();
-
     }
 }
