@@ -12,9 +12,7 @@ public class AuthRoutesTest extends BaseTest {
         driver.get("https://vue-demo.daniel-avellaneda.com/home");
         String actualResult = driver.getCurrentUrl();
         String expectedResult = "https://vue-demo.daniel-avellaneda.com/login";
-
         Assert.assertEquals(actualResult, expectedResult);
-
     }
 
     @Test
@@ -22,9 +20,7 @@ public class AuthRoutesTest extends BaseTest {
         driver.get("https://vue-demo.daniel-avellaneda.com/profile");
         String actualResult = driver.getCurrentUrl();
         String expectedResult = "https://vue-demo.daniel-avellaneda.com/login";
-
         Assert.assertEquals(actualResult, expectedResult);
-
     }
 
     @Test
@@ -32,9 +28,7 @@ public class AuthRoutesTest extends BaseTest {
         driver.get("https://vue-demo.daniel-avellaneda.com/admin/cities");
         String actualResult = driver.getCurrentUrl();
         String expectedResult = "https://vue-demo.daniel-avellaneda.com/login";
-
         Assert.assertEquals(actualResult, expectedResult);
-
     }
 
     @Test
@@ -42,7 +36,6 @@ public class AuthRoutesTest extends BaseTest {
         driver.get("https://vue-demo.daniel-avellaneda.com/admin/users");
         String actualResult = driver.getCurrentUrl();
         String expectedResult = "https://vue-demo.daniel-avellaneda.com/login";
-
         Assert.assertEquals(actualResult, expectedResult);
     }
 

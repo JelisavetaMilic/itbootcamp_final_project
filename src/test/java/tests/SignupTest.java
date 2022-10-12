@@ -3,14 +3,11 @@ package tests;
 import com.github.javafaker.Faker;
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.SignupPage;
-
-import java.time.Duration;
 
 public class SignupTest extends BaseTest{
 
@@ -35,7 +32,6 @@ public class SignupTest extends BaseTest{
     public void visitSignupPage() {
         String actualResultSignup = driver.getCurrentUrl();
         String expectedResultSignUp = "https://vue-demo.daniel-avellaneda.com/signup";
-
         Assert.assertEquals(actualResultSignup, expectedResultSignUp);
     }
 
@@ -43,17 +39,14 @@ public class SignupTest extends BaseTest{
     public void inputTypes() {
         String actualResultEmail = signupPage.getEmailAttributeType().getText();
         String expectedResultEmail = "E-mail";
-
         Assert.assertEquals(actualResultEmail, expectedResultEmail);
 
         String actualResultPassword = signupPage.getPasswordAttributeType().getText();
         String expectedResultPassword = "Password";
-
         Assert.assertEquals(actualResultPassword, expectedResultPassword);
 
         String actualResultConfirmPassword = signupPage.getConfirmPasswordAttributeType().getText();
         String expectedResultConfirmPassword = "Confirm Password";
-
         Assert.assertEquals(actualResultConfirmPassword, expectedResultConfirmPassword);
     }
 
@@ -63,13 +56,11 @@ public class SignupTest extends BaseTest{
 
         String actualResultErrorMessageEmailExist = signupPage.getErrorMessageEmailAlreadyExists().getText();
         String expectedResultErrorMessageEmailExist = "E-mail already exists";
-
         Assert.assertTrue(signupPage.getErrorMessageEmailAlreadyExists().isDisplayed());
         Assert.assertEquals(actualResultErrorMessageEmailExist, expectedResultErrorMessageEmailExist);
 
         String actualSignUpUrl = driver.getCurrentUrl();
         String expectedSignUpUrl = "https://vue-demo.daniel-avellaneda.com/signup";
-
         Assert.assertEquals(actualSignUpUrl, expectedSignUpUrl);
 
         signupPage.getCloseEmailButton().click();
@@ -77,25 +68,23 @@ public class SignupTest extends BaseTest{
 
     @Test
     public void signup() {
-
         String name = Faker.instance().name().fullName();
         String emailAddress = Faker.instance().internet().emailAddress();
         String password = Faker.instance().internet().password();
         String confirmPassword = password;
         signupPage.signUp(name,emailAddress,password, confirmPassword);
 
-        WebDriverWait driverWait = new WebDriverWait(driver, Duration.ofSeconds(20));
-        driverWait.until(ExpectedConditions.textToBe(By.xpath("//*[@id=\"app\"]/div[4]/div/div/div[1]"), "IMPORTANT: Verify your account"));
+        signupPage.getDriverWait().until(ExpectedConditions.textToBe(By.xpath("//*[@id=\"app\"]/div[4]/div/div/div[1]"), "IMPORTANT: Verify your account"));
 
         String actualImportantMessage = signupPage.getImportantMessage().getText();
         String expectedImportantMessage = "IMPORTANT: Verify your account";
-
         Assert.assertTrue(signupPage.getImportantMessage().isDisplayed());
         Assert.assertEquals(actualImportantMessage, expectedImportantMessage);
 
         signupPage.getCloseImportantButton().click();
         signupPage.getLogOutButtonSignUp().click();
         signupPage.getSignUpButton().click();
+
     }
 
 }

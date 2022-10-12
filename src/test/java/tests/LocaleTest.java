@@ -26,10 +26,8 @@ public class LocaleTest extends BaseTest {
 
         String actualResult = localePage.getPaginaText().getText();
         String expectedResult = "Página de aterrizaje";
-
         Assert.assertTrue(localePage.getPaginaText().isDisplayed());
         Assert.assertTrue(actualResult.contains(expectedResult));
-
     }
 
     @Test
@@ -39,7 +37,6 @@ public class LocaleTest extends BaseTest {
 
         String actualResult = localePage.getLandingText().getText();
         String expectedResult = "Landing";
-
         Assert.assertTrue(localePage.getLandingText().isDisplayed());
         Assert.assertTrue(actualResult.contains(expectedResult));
     }
@@ -51,7 +48,6 @@ public class LocaleTest extends BaseTest {
 
         String actualResult = localePage.getFrText().getText();
         String expectedResult = "Page d'atterrissage";
-
         Assert.assertTrue(localePage.getFrText().isDisplayed());
         Assert.assertTrue(actualResult.contains(expectedResult));
     }

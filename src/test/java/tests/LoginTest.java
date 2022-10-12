@@ -2,14 +2,11 @@ package tests;
 
 import com.github.javafaker.Faker;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.LoginPage;
-
-import java.time.Duration;
 
 public class LoginTest extends BaseTest{
 
@@ -34,7 +31,6 @@ public class LoginTest extends BaseTest{
     public void visitLoginPage() {
         String actualResult = driver.getCurrentUrl();
         String expectedResult = "https://vue-demo.daniel-avellaneda.com/login";
-
         Assert.assertEquals(actualResult, expectedResult);
 
     }
@@ -44,12 +40,10 @@ public class LoginTest extends BaseTest{
     public void inputTypes() {
         String actualResultEmail = loginPage.getEmailAttributeType().getText();
         String expectedResultEmail = "E-mail";
-
         Assert.assertEquals(actualResultEmail,expectedResultEmail);
 
         String actualResultPassword = loginPage.getPasswordAttributeType().getText();
         String expectedResultPassword = "Password";
-
         Assert.assertEquals(actualResultPassword, expectedResultPassword);
 
     }
@@ -62,13 +56,11 @@ public class LoginTest extends BaseTest{
 
         String actualResultError = loginPage.getErrorMessageUserNotExist().getText();
         String expectedResultError = "User does not exists";
-
         Assert.assertTrue(loginPage.getErrorMessageUserNotExist().isDisplayed());
         Assert.assertEquals(actualResultError, expectedResultError);
 
         String actualResultUrl = driver.getCurrentUrl();
         String expectedResultUrl = "https://vue-demo.daniel-avellaneda.com/login";
-
         Assert.assertEquals(actualResultUrl, expectedResultUrl);
 
     }
@@ -79,13 +71,11 @@ public class LoginTest extends BaseTest{
 
         String actualResultWrongPassword = loginPage.getErrorMessageWrongPassword().getText();
         String expectedResultWrongPassword = "Wrong password";
-
         Assert.assertTrue(loginPage.getErrorMessageWrongPassword().isDisplayed());
         Assert.assertEquals(actualResultWrongPassword, expectedResultWrongPassword);
 
         String actualResultUrl = driver.getCurrentUrl();
         String expectedResultUrl = "https://vue-demo.daniel-avellaneda.com/login";
-
         Assert.assertEquals(actualResultUrl, expectedResultUrl);
 
     }
@@ -94,26 +84,21 @@ public class LoginTest extends BaseTest{
     public void validLogin() {
         loginPage.logIn("admin@admin.com", "12345");
 
-        WebDriverWait driverWait = new WebDriverWait(driver,Duration.ofSeconds(20));
-        driverWait.until(ExpectedConditions.urlToBe("https://vue-demo.daniel-avellaneda.com/home"));
-
+        loginPage.getDriverWait().until(ExpectedConditions.urlToBe("https://vue-demo.daniel-avellaneda.com/home"));
         String actualResultUrl = driver.getCurrentUrl();
         String expectedResultUrl = "https://vue-demo.daniel-avellaneda.com/home";
-
         Assert.assertEquals(actualResultUrl, expectedResultUrl);
+
         loginPage.getLogoutButton().click();
     }
 
     @Test
     public void logout() {
-
-        WebDriverWait waiter = new WebDriverWait(driver, Duration.ofSeconds(20));
-        waiter.until(ExpectedConditions.visibilityOf(loginPage.getEmail()));
+        loginPage.getDriverWait().until(ExpectedConditions.visibilityOf(loginPage.getEmail()));
         loginPage.logIn("admin@admin.com", "12345");
 
         boolean actualResultLogoutButton = loginPage.getLogoutButton().isDisplayed();
         boolean expectedResult = true;
-
         Assert.assertEquals(actualResultLogoutButton, expectedResult);
 
         loginPage.getLogoutButton().click();
@@ -125,7 +110,6 @@ public class LoginTest extends BaseTest{
         driver.get("https://vue-demo.daniel-avellaneda.com/home");
         String loginActualUrl = driver.getCurrentUrl();
         String loginExpectedUrl = "https://vue-demo.daniel-avellaneda.com/login";
-
         Assert.assertEquals(loginActualUrl, loginExpectedUrl);
 
     }
